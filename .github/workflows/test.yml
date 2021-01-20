@@ -36,7 +36,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Set GOCACHE
-      shell: bash
       run: echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
     - uses: actions/cache@v2
       env:
@@ -49,7 +48,7 @@ jobs:
         path: |
           ${{ env.module_download_cache }}
           ${{ env.build_cache }}
-        key: ${{ runner.os }}-gofoo$-{{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go$-{{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
     - name: Test
