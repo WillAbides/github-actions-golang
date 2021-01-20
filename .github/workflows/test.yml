@@ -42,8 +42,8 @@ jobs:
         path: |
           ${{ env.module_download_cache }}
           ${{ env.build_cache }}
-        key: ${{ runner.os }}-gofoo$-{{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-gofoo2$-{{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-gofoo-
+          ${{ runner.os }}-gofoo2-
     - name: Test
       run: go test ./...
