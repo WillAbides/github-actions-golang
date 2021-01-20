@@ -20,13 +20,7 @@ jobs:
   test-cache:
     strategy:
       matrix:
-        include:
-          - os: ubuntu-latest
-            gobuild_path: ~/.cache/go-build
-          - os: macos-latest
-            gobuild_path: ~/Library/Caches/go-build
-          - os: windows-latest
-            gobuild_path: '%LocalAppData%\go-build'
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Install Go
@@ -48,8 +42,8 @@ jobs:
         path: |
           ${{ env.module_download_cache }}
           ${{ env.build_cache }}
-        key: ${{ runner.os }}-go$-{{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-gofoo$-{{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-go-
+          ${{ runner.os }}-gofoo-
     - name: Test
       run: go test ./...
