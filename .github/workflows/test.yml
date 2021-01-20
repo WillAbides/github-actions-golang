@@ -35,18 +35,16 @@ jobs:
         go-version: 1.15.x
     - name: Checkout code
       uses: actions/checkout@v2
-    - id: gobuildcache
+    - name: Set GOCACHE
       shell: bash
-      run: |
-        env
-        echo "::set-output name=path::$(go env GOCACHE)"
+      run: echo "GOCACHE='$(go env GOCACHE)'" >> $GITHUB_ENV
     - uses: actions/cache@v2
       env:
         # Module download cache
         module_download_cache: ~/go/pkg/mod
 
         # Build cache
-        build_cache: ${{ steps.gobuildcache.outputs.path }}
+        build_cache: ${{ env.GOCACHE }}
       with:
         path: |
           ${{ env.module_download_cache }}
