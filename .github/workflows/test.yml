@@ -1,6 +1,22 @@
 on: [push, pull_request]
 name: Test
 jobs:
+#  test:
+#    strategy:
+#      matrix:
+#        go-version: [ 1.14.x, 1.15.x ]
+#        os: [ ubuntu-latest, macos-latest, windows-latest ]
+#    runs-on: ${{ matrix.os }}
+#    steps:
+#      - name: Install Go
+#        uses: actions/setup-go@v2
+#        with:
+#          go-version: ${{ matrix.go-version }}
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#      - name: Test
+#        run: go test ./...
+
   test-cache:
     strategy:
       matrix:
@@ -21,7 +37,9 @@ jobs:
       uses: actions/checkout@v2
     - id: gobuildcache
       shell: bash
-      run: echo "::set-output name=path::$(go env GOCACHE)"
+      run: |
+        env
+        echo "::set-output name=path::$(go env GOCACHE)"
     - uses: actions/cache@v2
       env:
         # Module download cache
