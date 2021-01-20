@@ -90,13 +90,19 @@ downloaded modules:
 You can also include Go's build cache, to improve incremental builds:
 
 ```yaml
+- name: Set GOCACHE
+  run: echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
 - uses: actions/cache@v2
+  env:
+    # Module download cache
+    module_download_cache: ~/go/pkg/mod
+
+    # Build cache
+    build_cache: ${{ env.GOCACHE }}
   with:
     path: |
-      ~/go/pkg/mod              # Module download cache
-      ~/.cache/go-build         # Build cache (Linux)
-      ~/Library/Caches/go-build # Build cache (Mac)
-      '%LocalAppData%\go-build' # Build cache (Windows)
+      ${{ env.module_download_cache }}
+      ${{ env.build_cache }}
     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
     restore-keys: |
       ${{ runner.os }}-go-
