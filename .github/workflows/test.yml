@@ -37,7 +37,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Set GOCACHE
       shell: bash
-      run: echo "GOCACHE='$(go env GOCACHE)'" >> $GITHUB_ENV
+      run: echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
     - uses: actions/cache@v2
       env:
         # Module download cache
